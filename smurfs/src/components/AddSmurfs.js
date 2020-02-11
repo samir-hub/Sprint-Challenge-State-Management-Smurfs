@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { postEntry } from "../actions/index";
 
-import { postEntry } from '../actions/index';
+function AddSmurfs() {
+  const dispatch = useDispatch();
 
-function AddSmurfs(props) {
   const [smurf, setSmurf] = useState({
-    name: '',
-    age: '',
-    height: ''
+    name: "",
+    age: "",
+    height: ""
   });
 
   const handleChange = e => {
@@ -19,13 +20,12 @@ function AddSmurfs(props) {
 
   const postSmurf = e => {
     e.preventDefault();
-    // axiosWithAuth ==> ?? an axios instance; .post() ==> ?? promise
-    props.postEntry(smurf);
+    dispatch(postEntry(smurf));
     setSmurf({
-        name: '',
-        age: '',
-        height: ''
-      })
+      name: "",
+      age: "",
+      height: ""
+    });
   };
 
   return (
@@ -58,16 +58,4 @@ function AddSmurfs(props) {
   );
 }
 
-const mapStateToProps = state => {
-    return {
-      smurfs: state.smurfs,
-      error: state.error,
-      isFetching: state.isFetching
-    };
-  };
-  
-  export default connect(
-    mapStateToProps,
-    { postEntry }
-  )(AddSmurfs);
-
+export default AddSmurfs;
